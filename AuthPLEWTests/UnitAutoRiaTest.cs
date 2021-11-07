@@ -10,7 +10,7 @@ namespace AuthPLEWTests
         [SetUp]
         public void Setup()
         {
-            _homePage = new HomePage(new OpenQA.Selenium.Firefox.FirefoxDriver());
+             _homePage = new HomePage(new OpenQA.Selenium.Firefox.FirefoxDriver());
         }
 
         [Test]

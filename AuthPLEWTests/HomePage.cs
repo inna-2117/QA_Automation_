@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Linq;
 using SeleniumExtras.WaitHelpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AuthPLEWTests
 {
@@ -17,8 +18,7 @@ namespace AuthPLEWTests
         }
         public HomePage SelectCarCategoryFromDropDown(string type)
         {
-            GetElement("#categories")
-                .Click();
+            _driver.FindElement(By.Id("categories")).Click();
             SelectFromDropDown(type, "option");
             return this;
         }
@@ -45,20 +45,19 @@ namespace AuthPLEWTests
         }
         public SearchResultPage ClickSearchButton(string name)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("button[class='button']")))
+            _driver.FindElement(By.XPath("//span[text()=' " + name + " ']"))
                 .Click();
             return PageFactory.GetPage("SearchResultPage", _driver) as SearchResultPage;
         }
         private void SelectFromDropDownByXPath(string cssPattern)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(1));
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(cssPattern)))
                 .Click();
         }
         private void SelectFromDropDown(string choose, string cssPattern)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(1));
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(cssPattern)))
                 .Where(a => a.Text.Contains(choose))
                 .First()
